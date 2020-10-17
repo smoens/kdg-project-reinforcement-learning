@@ -17,27 +17,27 @@ class Environment(ABC):
         pass
 
     @abstractmethod
+    def close(self) -> None:
+        pass
+
     @property
+    @abstractmethod
     def action_space(self):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def observation_space(self):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def n_actions(self):
         pass
 
-    @abstractmethod
     @property
-    def state_size(self):
-        pass
-
     @abstractmethod
-    def close(self) -> None:
+    def state_size(self):
         pass
 
     @property

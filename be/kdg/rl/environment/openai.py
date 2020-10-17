@@ -23,27 +23,33 @@ class OpenAIGym(Environment, ABC):
     def render(self):
         self._env.render()
 
+    def close(self) -> None:
+        self._env.close()
+
+    @property
     def action_space(self):
         return self._env.action_space
 
+    @property
     def observation_space(self):
         return self._env.observation_space
 
+    @property
     def n_actions(self):
         return self._env.action_space.n
 
+    @property
     def state_size(self):
         if self.isdiscrete:
             return self._env.observation_space.n
         else:
             return self._env.observation_space.shape[0]
 
-    def close(self) -> None:
-        self._env.close()
-
+    @property
     def isdiscrete(self) -> bool:
         return hasattr(self._env.observation_space, 'n')
 
+    @property
     def name(self) -> str:
         return self._name
 
