@@ -28,8 +28,9 @@ class Agent:
 
 class TabularAgent(Agent):
 
-    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=10000) -> None:
+    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=10) -> None:
         super().__init__(environment, learning_strategy, n_episodes)
+        # TODO set n_episodes to 10000
 
     def train(self) -> None:
         super(TabularAgent, self).train()
@@ -45,6 +46,10 @@ class TabularAgent(Agent):
             # reset the learning strategy
             self.learning_strategy.start_episode()
 
+            # Added episode count for easier tracking of episodes
+            print(f'\n\nEpisode {self.episode_count}')
+            print(f'=============================')
+
             # while the episode isn't finished by length
             while not self.learning_strategy.done():
 
@@ -53,7 +58,7 @@ class TabularAgent(Agent):
                 # agent observes the results of his action: the next_state and the corresponding reward
                 observation = self.env.step(action)[:-1]
                 # render environment
-                # self.env.render()
+                self.env.render()
                 # create Percept from s,a,r,s' and add to Episode
                 percept = Percept((state, action) + observation)
                 episode.add(percept)

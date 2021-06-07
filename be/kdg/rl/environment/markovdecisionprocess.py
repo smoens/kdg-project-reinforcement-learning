@@ -37,15 +37,15 @@ class MarkovDecisionProcess:
         self.update_transition_model(percept)
 
     def update_reward(self, p: Percept) -> None:
-        # aan te vullen
+        # TODO aan te vullen
         pass
 
     def update_counts(self, percept: Percept) -> None:
-        # aan te vullen
+        # TODO aan te vullen
         pass
 
     def update_transition_model(self, percept: Percept) -> None:
-        # aan te vullen
+        # TODO aan te vullen
         pass
 
     def p(self, tsa) -> float:

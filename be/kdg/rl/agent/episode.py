@@ -1,5 +1,5 @@
 from collections import deque
-
+    # https://docs.python.org/3/library/collections.html#collections.deque
 from be.kdg.rl.agent.percept import Percept
 from be.kdg.rl.environment.environment import Environment
 
@@ -19,16 +19,16 @@ class Episode:
 
     def percepts(self, n: int):
         """ Haal n laatste percepts op uit Episode """
-        pass
+        return self._percepts[n]
 
     def compute_returns(self) -> None:
         """ Bereken voor elke Percept uit de Episode zijn discounted return Gt"""
-        # HIER AANVULLEN
+        # TODO HIER AANVULLEN
         pass
 
     def sample(self, batch_size: int):
         """ Sample een willekeurige batch uit deze Episode """
-        # HIER AANVULLEN
+        # TODO HIER AANVULLEN
         pass
 
     @property

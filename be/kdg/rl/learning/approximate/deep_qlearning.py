@@ -17,7 +17,7 @@ class DeepQLearning(LearningStrategy):
         super().__init__(environment, λ, γ, t_max)
         self.batch_size = batch_size
         self.ddqn = ddqn
-        # HIER AANVULLEN
+        # TODO HIER AANVULLEN
 
     def next_action(self, state):
         """ Neural net decides on the next action to take """
@@ -29,5 +29,5 @@ class DeepQLearning(LearningStrategy):
         pass
 
     def start_episode(self):
-        # HIER AANVULLEN
+        # TODO implement start_episode
         pass

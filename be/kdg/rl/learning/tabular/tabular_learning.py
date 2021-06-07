@@ -1,3 +1,4 @@
+import random
 from abc import abstractmethod
 
 import numpy as np
@@ -12,11 +13,12 @@ class TabularLearner(LearningStrategy):
     """
     A tabular learner implements a tabular method such as Q-Learning, N-step Q-Learning, ...
     """
-    π: ndarray
-    v_values: ndarray
-    q_values: ndarray
+    π: ndarray          # policy
+    v_values: ndarray   # quantification of policy by v-values (based on states)
+    q_values: ndarray   # quantification of policy by q-values (based on states and actions)
 
     def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.9, t_max=99) -> None:
+        # TODO set t_max to 99
         super().__init__(environment, λ, γ, t_max)
         # learning rate
         self.α = α
@@ -31,8 +33,16 @@ class TabularLearner(LearningStrategy):
         self.q_values = np.zeros((self.env.state_size, self.env.n_actions))
 
     def next_action(self, s: int):
-        # HIER AANVULLEN
-        pass
+        # TODO implement next_action function - Algorithm 7
+        exploitation_tradeoff = random.uniform(0, 1)
+        if exploitation_tradeoff > self.ε:
+            action = np.argmax(self.π[:, s])
+        else:
+            action = self.env.action_space.sample()  # just a random next action
+        print(f'ε: {self.ε}; Exploitation tradeoff: {exploitation_tradeoff}; N'
+              f'ext: {action}; Prop: {round(self.π[action, s],3)}')
+        print(f'Policy for state {s} = {self.π[:, s]}')
+        return action
 
     @abstractmethod
     def learn(self, episode: Episode):
@@ -47,8 +57,18 @@ class TabularLearner(LearningStrategy):
         pass
 
     def improve(self):
-        # HIER AANVULLEN
-        pass
+        # TODO implement improve function - Algorithm 8
+        # van q-waarden beste actie eruit halen
+        for s in range(self.env.state_size):
+            a = np.argmax(self.q_values[s, :])
+            for i in range(self.env.n_actions):
+                if a == i:
+                     self.π[i, s] = 1 - self.ε + self.ε/self.env.n_actions
+                else:
+                     self.π[i, s] = self.ε/self.env.n_actions
+        self.ε = self.ε_min + (self.ε_max - self.ε_min) * np.exp(-self.λ * self.τ)
+        #print(f'{self.π}\n\n')
+
 
     def start_episode(self):
         self.t = 0

@@ -40,7 +40,8 @@ class LearningStrategy(ABC):
 
     def decay(self):
         # Reduce epsilon ε, because we need less and less exploration as time progresses
-        # HIER AANVULLEN
+        # TODO implement decay-function
+        # some fixed decay to test initially? λ = 0.05
         pass
 
     def done(self):
