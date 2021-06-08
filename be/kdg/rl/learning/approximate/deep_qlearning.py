@@ -31,3 +31,16 @@ class DeepQLearning(LearningStrategy):
     def start_episode(self):
         # TODO implement start_episode
         pass
+
+
+    def learn_from_batch(self, P):
+        count = 0
+        D = self.build_training_set()
+        pass
+
+    def build_training_set(self, P):
+        return 0
+        pass
+
+    def train_network(self, D):
+        pass

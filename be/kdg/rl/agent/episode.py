@@ -1,5 +1,6 @@
 from collections import deque
     # https://docs.python.org/3/library/collections.html#collections.deque
+    # https://pythontic.com/containers/deque/index
 from be.kdg.rl.agent.percept import Percept
 from be.kdg.rl.environment.environment import Environment
 
@@ -19,7 +20,7 @@ class Episode:
 
     def percepts(self, n: int):
         """ Haal n laatste percepts op uit Episode """
-        return self._percepts[n]
+        return list(self._percepts)[-n:]
 
     def compute_returns(self) -> None:
         """ Bereken voor elke Percept uit de Episode zijn discounted return Gt"""

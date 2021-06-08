@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
-
+import numpy as np
 
 class LearningStrategy(ABC):
     """
@@ -40,9 +40,7 @@ class LearningStrategy(ABC):
 
     def decay(self):
         # Reduce epsilon ε, because we need less and less exploration as time progresses
-        # TODO implement decay-function
-        # some fixed decay to test initially? λ = 0.05
-        pass
+        self.ε = self.ε_min + (self.ε_max - self.ε_min) * np.exp(-self.λ * self.τ)
 
     def done(self):
         return self.t > self.t_max

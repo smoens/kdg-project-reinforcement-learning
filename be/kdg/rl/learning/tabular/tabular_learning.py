@@ -58,15 +58,17 @@ class TabularLearner(LearningStrategy):
 
     def improve(self):
         # TODO implement improve function - Algorithm 8
-        # van q-waarden beste actie eruit halen
+        print("\n===== policy improvement ====")
         for s in range(self.env.state_size):
-            a = np.argmax(self.q_values[s, :])
-            for i in range(self.env.n_actions):
-                if a == i:
-                     self.π[i, s] = 1 - self.ε + self.ε/self.env.n_actions
+            best_a = np.argmax(self.q_values[s, :])
+            for a in range(self.env.n_actions):
+                if best_a == a:
+                     self.π[a, s] = 1 - self.ε + self.ε/self.env.n_actions
                 else:
-                     self.π[i, s] = self.ε/self.env.n_actions
-        self.ε = self.ε_min + (self.ε_max - self.ε_min) * np.exp(-self.λ * self.τ)
+                     self.π[a, s] = self.ε/self.env.n_actions
+        self.decay()
+        print("policy π is updated")
+        print(f'timestamp t: {self.t}\n')
         #print(f'{self.π}\n\n')
 
 
