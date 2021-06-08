@@ -3,7 +3,7 @@ from collections import deque
     # https://pythontic.com/containers/deque/index
 from be.kdg.rl.agent.percept import Percept
 from be.kdg.rl.environment.environment import Environment
-
+from numpy.random import choice
 
 class Episode:
     """
@@ -30,7 +30,8 @@ class Episode:
     def sample(self, batch_size: int):
         """ Sample een willekeurige batch uit deze Episode """
         # TODO HIER AANVULLEN
-        pass
+        sample = choice(self._percepts, batch_size)
+        return sample
 
     @property
     def size(self):
