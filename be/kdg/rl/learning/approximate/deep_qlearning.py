@@ -1,6 +1,3 @@
-# https://github.com/NikhilDange1/Cartpole-DQN-agent/blob/master/DQNagent.py
-#
-
 from tensorflow.keras import Model
     # https://keras.io/api/models/model/
 import numpy as np

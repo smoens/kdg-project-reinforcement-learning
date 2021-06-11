@@ -1,17 +1,3 @@
-# https://medium.com/swlh/introduction-to-q-learning-with-openai-gym-2d794da10f3d
-# https://valohai.com/blog/reinforcement-learning-tutorial-part-1-q-learning/
-# https://www.kaggle.com/sarjit07/reinforcement-learning-using-q-table-frozenlake
-# https://cwong8.github.io/projects/FrozenLake/ : nice example with visual representatioin of policy
-# https://github.com/katjawittfoth/Frozen_Lake
-
-# https://github.com/codeheroku/Introduction-to-Machine-Learning/tree/master/Reinforcement%20Learning
-    #YT: https://www.youtube.com/watch?v=3begG_s9lzg
-# https://github.com/Procuste34/IntroRL/tree/master/I%20-%20Model-based/code/4%20-%20Gym%20:%20Frozen%20Lake
-    #YT: https://www.youtube.com/watch?v=-tvLISFkkK8
-
-# https://www.analyticsvidhya.com/blog/2018/09/reinforcement-learning-model-based-planning-dynamic-programming/
-# https://www.kaggle.com/arjanso/reinforcement-learning-chess-1-policy-iteration
-
 import numpy as np
 import time
 

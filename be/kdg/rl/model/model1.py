@@ -4,9 +4,6 @@ from keras import optimizers
 
 from be.kdg.rl.config import config
 
-
-# Cartpole DQN https://www.youtube.com/watch?v=D795oNqa-Vk
-
 def createModel(selectedModel):
     ############# MODEL #############
     model = models.Sequential()
