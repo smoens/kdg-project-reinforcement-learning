@@ -57,7 +57,7 @@ class DeepQLearning(LearningStrategy):
 
 
     def build_training_set(self, percepts):
-        # TODO
+        # TODO = CHECK
         #   Q2 wordt gebruikt om een training set te bouwen voor Q1
         #   Q1 wordt getraind
         [training_data] = deque()
@@ -77,6 +77,6 @@ class DeepQLearning(LearningStrategy):
         return training_data
 
     def train_network(self, training_data):  # train the network q1
-        # TODO
-        # use train/fit method of q1
-        pass
+        # TODO = CHECK
+        for (s, q) in training_data:
+            self.q1.fit(s, q, batch_size=self.batch_size)
