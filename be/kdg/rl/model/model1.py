@@ -4,19 +4,17 @@ from keras import optimizers
 
 from be.kdg.rl.config import config
 
-def createModel(selectedModel):
+def create_model(selected_model, state_size, action_size):
     ############# MODEL #############
     model = models.Sequential()
-    model.add(layers.Dense(256, activation='relu', input_shape=[]))
-        # TODO add correct input spaces...
-    model.add(layers.Dense(64, activation='relu', input_shape=[]))
-        # TODO add layer size of action_size
-    #model.add(layers.Dense(action_size, activation='softmax'))
+    model.add(layers.Dense(256, activation='relu', input_dim=state_size))
+    model.add(layers.Dense(64, activation='relu', input_dim=state_size))
+    model.add(layers.Dense(action_size, activation='linear'))
 
     model.summary()
 
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=optimizers.RMSprop(lr=1e-4),
-                  metrics=config.params.get(selectedModel).get("metrics"))
+    model.compile(loss='mse',
+                  optimizer=optimizers.Adam(lr=1e-4),
+                  metrics=config.paramsModel.get(selected_model).get("metrics"))
 
     return model

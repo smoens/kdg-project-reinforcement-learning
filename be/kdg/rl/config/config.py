@@ -1,5 +1,5 @@
 ############# PARAMETERS #############
-params = {
+paramsModel = {
     "model1": {
         "model_filename": "model1.h5",
         "lr": 0.001,
