@@ -28,7 +28,7 @@ class Agent:
 
 class TabularAgent(Agent):
 
-    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=10) -> None:
+    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=10000) -> None:
         super().__init__(environment, learning_strategy, n_episodes)
         # TODO set n_episodes to 10000
 

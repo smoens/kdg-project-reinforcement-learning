@@ -32,6 +32,9 @@ class TabularLearner(LearningStrategy):
         # state-action table
         self.q_values = np.zeros((self.env.state_size, self.env.n_actions))
 
+        # total rewards
+        self.total_rewards = 0
+
     def next_action(self, s: int):
         # TODO implement next_action function - Algorithm 7
         exploitation_tradeoff = random.uniform(0, 1)
@@ -58,7 +61,6 @@ class TabularLearner(LearningStrategy):
 
     def improve(self):
         # TODO implement improve function - Algorithm 8
-        print("\n===== policy improvement ====")
         for s in range(self.env.state_size):
             best_a = np.argmax(self.q_values[s, :])
             for a in range(self.env.n_actions):
@@ -67,7 +69,7 @@ class TabularLearner(LearningStrategy):
                 else:
                      self.π[a, s] = self.ε/self.env.n_actions
         self.decay()
-        print("policy π is updated")
+        print("=Policy improvement: policy π is updated=")
         print(f'timestamp t: {self.t}\n')
         #print(f'{self.π}\n\n')
 
