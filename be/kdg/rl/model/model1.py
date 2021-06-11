@@ -2,7 +2,7 @@ from keras import layers
 from keras import models
 from keras import optimizers
 
-from be.kdg.rl.config import config
+from be.kdg.rl.utils import config
 
 def create_model(selected_model, state_size, action_size):
     ############# MODEL #############

@@ -40,8 +40,6 @@ class DeepQLearning(LearningStrategy):
         super().learn(episode)
 
     def start_episode(self):
-        # TODO = CHECK
-        # TODO implement start_episode
         self.t = 0
 
 
