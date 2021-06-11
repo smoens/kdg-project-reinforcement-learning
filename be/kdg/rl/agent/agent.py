@@ -5,7 +5,7 @@ from be.kdg.rl.agent.percept import Percept
 from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.learningstrategy import LearningStrategy
 from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
-from be.kdg.rl.utils.visuals import QValuesVisual
+import be.kdg.rl.utils.visuals as viz
 
 
 class Agent:
@@ -73,7 +73,9 @@ class TabularAgent(Agent):
                 # break if episode is over
                 if percept.done:
                     if self.episode_count % 10 == 0:
-                        QValuesVisual.plot(self.learning_strategy.q_values) #self.learning_strategy.q_values
+                        print(self.learning_strategy.π)
+                        #QValuesVisual.plot(self.learning_strategy.q_values)
+                        viz.PolicyVisual.plot(self.learning_strategy.π)
                     break
 
             # end episode
