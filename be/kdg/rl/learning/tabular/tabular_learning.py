@@ -17,7 +17,7 @@ class TabularLearner(LearningStrategy):
     v_values: ndarray   # quantification of policy by v-values (based on states)
     q_values: ndarray   # quantification of policy by q-values (based on states and actions)
 
-    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.9, t_max=99) -> None:
+    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.4, t_max=199) -> None: #α=0.7 #γ=0.9
         # TODO set t_max to 99
         super().__init__(environment, λ, γ, t_max)
         # learning rate
@@ -36,15 +36,15 @@ class TabularLearner(LearningStrategy):
         self.total_rewards = 0
 
     def next_action(self, s: int):
-        # TODO implement next_action function - Algorithm 7
+        # TODO implementation of Algorithm 7
         exploitation_tradeoff = random.uniform(0, 1)
         if exploitation_tradeoff > self.ε:
             action = np.argmax(self.π[:, s])
         else:
             action = self.env.action_space.sample()  # just a random next action
-        print(f'ε: {self.ε}; Exploitation tradeoff: {exploitation_tradeoff}; N'
-              f'ext: {action}; Prop: {round(self.π[action, s],3)}')
-        print(f'Policy for state {s} = {self.π[:, s]}')
+        # print(f'ε: {self.ε}; Exploitation tradeoff: {exploitation_tradeoff}; N'
+        #       f'ext: {action}; Prop: {round(self.π[action, s],3)}')
+        # print(f'Policy for state {s} = {self.π[:, s]}')
         return action
 
     @abstractmethod
@@ -69,8 +69,8 @@ class TabularLearner(LearningStrategy):
                 else:
                      self.π[a, s] = self.ε/self.env.n_actions
         self.decay()
-        print("=Policy improvement: policy π is updated=")
-        print(f'timestamp t: {self.t}\n')
+        # print("=Policy improvement: policy π is updated=")
+        # print(f'timestamp t: {self.t}\n')
         #print(f'{self.π}\n\n')
 
 

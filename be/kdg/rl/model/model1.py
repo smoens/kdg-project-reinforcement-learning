@@ -15,6 +15,6 @@ def create_model(selected_model, state_size, action_size):
 
     model.compile(loss='mse',
                   optimizer=optimizers.Adam(lr=1e-4),
-                  metrics=config.paramsModel.get(selected_model).get("metrics"))
+                  metrics=config.params.get("models").get(selected_model).get("metrics"))
 
     return model

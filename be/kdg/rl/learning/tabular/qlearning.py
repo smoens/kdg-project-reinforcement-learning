@@ -8,7 +8,7 @@ from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
 
 class Qlearning(TabularLearner):
 
-    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.9, t_max=99) -> None:
+    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.4, t_max=199) -> None: #α=0.7
         # TODO move params to utils file for easier playing with values
         TabularLearner.__init__(self, environment, α, λ, γ, t_max)
 
@@ -28,12 +28,12 @@ class Qlearning(TabularLearner):
         #     print("\n$$$$$$$$$$$$$$$$$$$")
         #     print("==== JOEPIIEEE ====")
         #     print("$$$$$$$$$$$$$$$$$$$")
-        #     print(f'Total rewards: $$$ {self.total_rewards} ({np.round(self.total_rewards/(self.t+1)*100,0)}%) $$$\n\n')
+        #     print(f'Total rewards: $$$ {self.total_rewards} $$$\n\n')
         #     time.sleep(0.6)
         # elif done:
         #     print("==================== DEAD ====================")
-        #     print(f'You fell in the hole after {self.t} timesteps')
-        #     print(f'Total rewards: $$$ {self.total_rewards} ({np.round(self.total_rewards/(self.t+1)*100,0)}%) $$$')
+        #     print(f'You fell in the hole after {(self.t+1)} timesteps')
+        #     print(f'Total rewards: $$$ {self.total_rewards} $$$')
         #     time.sleep(0.4)
 
         # compute return
@@ -42,10 +42,10 @@ class Qlearning(TabularLearner):
         super().learn(episode)
 
     def evaluate(self):
-        # Algorithm 4
+        # TODO Algorithm 4
         for s in range(self.env.state_size):
             self.v_values[s] = np.max(self.q_values[s, :])
-        print("\n=Policy evaluation: v_values are updated=")
+        #print("\n=Policy evaluation: v_values are updated=")
 
 
 class NStepQlearning(TabularLearner):
