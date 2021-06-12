@@ -1,5 +1,7 @@
 from abc import abstractmethod
 
+import matplotlib.pyplot as plt
+
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.agent.percept import Percept
 from be.kdg.rl.environment.environment import Environment
@@ -29,7 +31,7 @@ class Agent:
 
 class TabularAgent(Agent):
 
-    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=100) -> None:
+    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=10000) -> None:
         super().__init__(environment, learning_strategy, n_episodes)
         # TODO set n_episodes to 10000
 
@@ -72,10 +74,13 @@ class TabularAgent(Agent):
 
                 # break if episode is over
                 if percept.done:
-                    if self.episode_count % 10 == 0:
-                        print(self.learning_strategy.π)
-                        #QValuesVisual.plot(self.learning_strategy.q_values)
+                    if self.episode_count % 100 == 0:
+                        #print(self.learning_strategy.π)
+                        plt.subplot(1, 2, 1)
+                        viz.QValuesVisual.plot(self.learning_strategy.q_values)
+                        plt.subplot(1, 2, 2)
                         viz.PolicyVisual.plot(self.learning_strategy.π)
+                        plt.show()
                     break
 
             # end episode
