@@ -37,16 +37,14 @@ class MarkovDecisionProcess:
         self.update_transition_model(percept)
 
     def update_reward(self, p: Percept) -> None:
-        # TODO aan te vullen
-        pass
+        self._reward_model[p.state, p.next_state] = p.reward
 
     def update_counts(self, percept: Percept) -> None:
-        # TODO aan te vullen
-        pass
+        self.n_sa[percept.state, percept.action] += 1
+        self.n_tsa[percept.state, percept.next_state, percept.action] += 1
 
     def update_transition_model(self, percept: Percept) -> None:
-        # TODO aan te vullen
-        pass
+        self.P[percept.next_state, percept.state, percept.action] = self.n_tsa / self.n_sa
 
     def p(self, tsa) -> float:
         return self.P[tsa]
