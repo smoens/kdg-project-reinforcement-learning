@@ -8,7 +8,7 @@ from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
 
 class Qlearning(TabularLearner):
 
-    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.4, t_max=199) -> None: #α=0.7
+    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.5, t_max=199) -> None: #α=0.7
         # TODO move params to utils file for easier playing with values
         TabularLearner.__init__(self, environment, α, λ, γ, t_max)
 
