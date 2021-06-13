@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     environment = eval(env_name)
     agent: Agent = eval(agent + "(environment," + learning + "(environment" +
-                        ("))" if n is None and ddqn is None else "," + n) +
-                        ("))" if ddqn is None else "," + ddqn + "))")
+                        ("))" if n is None and ddqn is None else "," + n +
+                        ("))" if ddqn is None else "," + ddqn + "))"))
                     )
     agent.train()
