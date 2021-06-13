@@ -1,10 +1,10 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment40"
+current_experiment = "experiment30b"
 n_episodes = 200
 output_freq = 10        # define at what frequency of episodes we want to create output
-update_interval = 20    # update interval for deep learning
+update_interval = 10    # update interval for deep learning
 
 def init():
     init_folders(current_experiment)
@@ -233,6 +233,19 @@ params = {
             'learning': 'DeepQLearning',
             'ddqn': "False",
             'n': '20',       #batch_size
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.9,
+            't_max': 99
+        },
+        # ## DeepQLearning experiments ## #
+        "experiment30b": {
+            'description': 'Experiment DeepQLearning',
+            'agent': 'DQNAgent',
+            'environment': 'CartPoleEnvironment',
+            'learning': 'DeepQLearning',
+            'ddqn': "False",
+            'n': '5',  # batch_size
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,

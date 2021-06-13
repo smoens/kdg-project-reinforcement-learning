@@ -30,7 +30,7 @@ class DeepQLearning(LearningStrategy):
         """ Neural net decides on the next action to take """
         exploitation_tradeoff = random.uniform(0, 1)
         if exploitation_tradeoff > self.ε:
-            action = np.argmax(self.q1.predict(state))
+            action = np.argmax(self.q1.predict(np.reshape(state, [1, self.env.state_size])))
         else:
             action = self.env.action_space.sample()  # just a random next action
         return action
@@ -57,7 +57,6 @@ class DeepQLearning(LearningStrategy):
     def build_training_set(self, percepts):
         training_data = deque()
         for p in percepts:  # random sample of percepts
-            #print(f'p: {p}')
             s = p.state
             a = p.action
             r = p.reward
@@ -79,7 +78,6 @@ class DeepQLearning(LearningStrategy):
         return training_data
 
     def train_network(self, training_data):  # train the network q1
-        for s, q in training_data:
-            s_reshape = np.reshape(s, (1,self.env.state_size))
-            q_reshape = np.asarray([[q]])
-            self.q1.fit(s_reshape, q_reshape, batch_size=self.batch_size, verbose=0)   # training of Q1
+        state = np.asarray([np.asarray(a) for a in np.transpose(list(training_data))[0][:]]).astype('float32')
+        qval  = np.asarray(np.transpose(list(training_data))[1]).astype('float32')
+        self.q1.fit(state, qval, batch_size=self.batch_size, verbose=0)
