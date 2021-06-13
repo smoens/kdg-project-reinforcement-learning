@@ -57,14 +57,14 @@ class NStepQlearning(TabularLearner):
 
     def learn(self, episode: Episode):
         if episode.size >= self.n:
-            for p in episode.percepts(self.n):
+            for p in reversed(episode.percepts(self.n)):
                 s = p.state
                 a = p.action
                 r = p.reward
                 s2 = p.next_state
                 done = p.done
                 self.q_values[s, a] = self.q_values[s, a] + self.α * \
-                                      (self.q_values[s, a] - (r + self.γ * (np.max(self.q_values[s2, :]))))
+                                      (r + self.γ * (np.max(self.q_values[s2, :])) - self.q_values[s, a])
                 self.total_rewards += r
             super().learn(episode)
 
