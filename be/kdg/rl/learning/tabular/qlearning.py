@@ -4,12 +4,12 @@ import time
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
+from be.kdg.rl.utils.config import params
 
 
 class Qlearning(TabularLearner):
 
-    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.5, t_max=199) -> None: #α=0.7
-        # TODO move params to utils file for easier playing with values
+    def __init__(self, environment: Environment, α=0.5, λ=0.0005, γ=0.5, t_max=99) -> None:
         TabularLearner.__init__(self, environment, α, λ, γ, t_max)
 
     def learn(self, episode: Episode):

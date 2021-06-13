@@ -17,7 +17,7 @@ class TabularLearner(LearningStrategy):
     v_values: ndarray   # quantification of policy by v-values (based on states)
     q_values: ndarray   # quantification of policy by q-values (based on states and actions)
 
-    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.5, t_max=199) -> None: #α=0.7 #γ=0.9
+    def __init__(self, environment: Environment, α=0.7, λ=0.0005, γ=0.5, t_max=99) -> None:
         # TODO set t_max to 99
         super().__init__(environment, λ, γ, t_max)
         # learning rate
