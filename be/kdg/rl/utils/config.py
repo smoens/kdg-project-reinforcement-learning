@@ -1,7 +1,7 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment30"
+current_experiment = "experiment40"
 n_episodes = 200
 output_freq = 10        # define at what frequency of episodes we want to create output
 update_interval = 20    # update interval for deep learning
@@ -238,7 +238,7 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        # ## DeepQLearning experiments ## #
+        # ## Double DeepQLearning experiments ## #
         "experiment40": {
             'description': 'Experiment DoubleDeepQLearning',
             'agent': 'DQNAgent',

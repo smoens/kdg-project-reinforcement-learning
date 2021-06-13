@@ -1,5 +1,4 @@
 from tensorflow.keras import Model
-    # https://keras.io/api/models/model/
 import numpy as np
 import random
 from collections import deque
@@ -21,7 +20,7 @@ class DeepQLearning(LearningStrategy):
         super().__init__(environment, λ, γ, t_max)
         self.batch_size = batch_size
         self.ddqn = ddqn
-        # TODO HIER AANVULLEN
+
         self.c = config.update_interval
         self.q1 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
         self.q2 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
@@ -29,15 +28,11 @@ class DeepQLearning(LearningStrategy):
 
     def next_action(self, state):
         """ Neural net decides on the next action to take """
-        # TODO add function from Algorithm 10
         exploitation_tradeoff = random.uniform(0, 1)
         if exploitation_tradeoff > self.ε:
             action = np.argmax(self.q1.predict(state))
         else:
             action = self.env.action_space.sample()  # just a random next action
-        # print(f'ε: {self.ε}; Exploitation tradeoff: {exploitation_tradeoff}; N'
-        #       f'ext: {action}; Prop: {round(self.π[action, s],3)}')
-        # print(f'Policy for state {s} = {self.π[:, s]}')
         return action
 
     def learn(self, episode: Episode):

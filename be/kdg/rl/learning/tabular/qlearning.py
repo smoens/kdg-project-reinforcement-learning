@@ -1,10 +1,8 @@
 import numpy as np
-import time
 
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
-from be.kdg.rl.utils.config import params
 
 
 class Qlearning(TabularLearner):

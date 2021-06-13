@@ -1,7 +1,6 @@
 from abc import abstractmethod
 
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import time
 import numpy as np
 import pandas as pd
@@ -14,6 +13,7 @@ from be.kdg.rl.learning.learningstrategy import LearningStrategy
 from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
 from be.kdg.rl.utils.visuals import QValuesVisual, PolicyVisual, ReturnVisual
 from be.kdg.rl.utils import config
+
 
 class Agent:
 
@@ -52,7 +52,6 @@ class TabularAgent(Agent):
             "avg_reward": np.empty(n_episodes + 1)
         })
         super().__init__(environment, learning_strategy, n_episodes)
-
 
     def train(self) -> None:
         super(TabularAgent, self).train()
@@ -127,6 +126,7 @@ class TabularAgent(Agent):
             ReturnVisual.plot(self.stats.episode_nr[:self.episode_count], self.stats.avg_reward[:self.episode_count], self.episode_count)
             QValuesVisual.plot(self.learning_strategy.q_values, self.episode_count)
             PolicyVisual.plot(self.learning_strategy.π, self.episode_count)
+
 
 class DQNAgent(Agent):
 
