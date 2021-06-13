@@ -80,7 +80,7 @@ class TabularAgent(Agent):
                 # agent observes the results of his action: the next_state and the corresponding reward
                 observation = self.env.step(action)[:-1]
                 # render environment
-                #self.env.render()
+                self.env.render()
                 # create Percept from s,a,r,s' and add to Episode
                 percept = Percept((state, action) + observation)
                 episode.add(percept)
@@ -93,7 +93,7 @@ class TabularAgent(Agent):
 
                 # break if episode is over
                 if percept.done:
-                    self.results()
+                    # self.results()
                     break
 
             # end episode

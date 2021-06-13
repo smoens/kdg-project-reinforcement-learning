@@ -6,7 +6,7 @@ from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.learningstrategy import LearningStrategy
 from be.kdg.rl.model import model1
-
+from be.kdg.rl.utils import config
 
 class DeepQLearning(LearningStrategy):
     """
@@ -21,10 +21,9 @@ class DeepQLearning(LearningStrategy):
         self.batch_size = batch_size
         self.ddqn = ddqn
         # TODO HIER AANVULLEN
-        self.c = 5  # update interval
+        self.c = config.update_interval
         self.q1 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
         self.q2 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
-        self.q_values = np.zeros((self.env.state_size, self.env.n_actions))
 
     def next_action(self, state):
         """ Neural net decides on the next action to take """
@@ -33,6 +32,7 @@ class DeepQLearning(LearningStrategy):
 
     def learn(self, episode: Episode):
         # TODO = CHECK
+        print("============= START TO LEARN =================")
         """ Sample batch from Episode and train NN on sample"""
         if episode.size >= self.batch_size:
             percepts = episode.sample(self.batch_size)
@@ -45,8 +45,9 @@ class DeepQLearning(LearningStrategy):
 
     def learn_from_batch(self, percepts):
         # TODO = CHECK
+        print("============= learn_from_batch =================")
         count = 0
-        training_data = self.build_training_set(percepts)  #transform percepts so they can be used by a neural network
+        training_data = self.build_training_set(percepts)  # transform percepts so they can be used by a neural network
         self.train_network(training_data)
 
         count += 1
@@ -58,23 +59,28 @@ class DeepQLearning(LearningStrategy):
         # TODO = CHECK
         #   Q2 wordt gebruikt om een training set te bouwen voor Q1
         #   Q1 wordt getraind
-        [training_data] = deque()
+        print("============= build_training_set =================")
+        training_data = deque()
         for p in percepts:  # random sample of percepts
+            #print(f'p: {p}')
             s = p.state
             a = p.action
             r = p.reward
             s2 = p.next_state
             done = p.done
 
-            optimal_q = self.q1.predict(s2)
+            optimal_q = self.q1.predict(np.reshape(s2, [1, self.env.state_size]))
             if done:
-                self.q_values[s, a] = r
+                q = r
             else:
-                self.q_values[s, a] = r + self.γ * np.max(optimal_q)
-            training_data.append(s, self.q_values[s, a])
+                q = r + self.γ * np.max(optimal_q)
+            training_data.append((s, q))
+        #print(training_data)
         return training_data
 
     def train_network(self, training_data):  # train the network q1
         # TODO = CHECK
-        for (s, q) in training_data:
-            self.q1.fit(s, q, batch_size=self.batch_size)
+        #states = np.zeros((self.batch_size, self.env.state_size))
+        states = np.reshape([training_data[i][0] for i in range(self.batch_size)], (1, self.batch_size, self.env.state_size))[0]
+        rewards = np.reshape([training_data[i][1] for i in range(self.batch_size)], (1, self.batch_size, 1))[0]
+        self.q1.fit(states, rewards, batch_size=self.batch_size)
