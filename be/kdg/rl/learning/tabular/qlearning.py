@@ -84,7 +84,7 @@ class MonteCarloLearning(TabularLearner):
         self.percepts = []  # this will buffer the percepts
 
     def learn(self, episode: Episode):
-        for p in episode.percepts(episode.size):
+        for p in reversed(episode.percepts(episode.size)):
             s = p.state
             a = p.action
             r = p.reward
