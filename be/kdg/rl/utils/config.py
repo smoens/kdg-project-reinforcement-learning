@@ -1,11 +1,11 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment6"
+current_experiment = "experiment7"
 n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
-def init(environment):
+def init():
     init_folders(current_experiment)
 
 
