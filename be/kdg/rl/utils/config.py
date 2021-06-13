@@ -1,7 +1,7 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment16"
+current_experiment = "experiment20"
 n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
@@ -165,6 +165,17 @@ params = {
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'nstep': '1',
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.9,
+            't_max': 99
+        },
+        # ## Monte Carlo experiments ## #
+        "experiment20": {
+            'description': 'Experiment MonteCarloLearning',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'MonteCarloLearning',
+            'nstep': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
