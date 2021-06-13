@@ -203,7 +203,7 @@ class DQNAgent(Agent):
 
         self.stats.at[self.episode_count, 'timesteps'] = self.learning_strategy.t #total rewards is nr timesteps, the more timesteps in an episode the better
         self.stats.at[self.episode_count, 'avg_timesteps'] = np.round(self.learning_strategy.t / (self.episode_count + 1) * 100, 1)   # total rewards is nr timesteps
-        print(f"Avg Timesteps balanced: $$ {self.learning_strategy.t} $$ ")
+        print(f"Timesteps balanced: $$ {self.learning_strategy.t} $$ ")
         print(f"Maximum: == {self.learning_strategy.max_timesteps} ==")
         # self.stats.at[self.episode_count, 'avg_reward'] = \
         #     np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
