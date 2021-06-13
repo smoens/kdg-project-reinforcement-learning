@@ -24,11 +24,6 @@ class Agent:
         self.episodes: [Episode] = []
         self.n_episodes = n_episodes  # total episodes
         self.episode_count = 0
-        self.stats = pd.DataFrame({
-            "episode_nr": np.arange(1, n_episodes + 2, 1),
-            "total_reward": np.empty(n_episodes + 1, dtype=int),
-            "avg_reward": np.empty(n_episodes + 1)
-        })
 
     @abstractmethod
     def train(self) -> None:
@@ -51,8 +46,13 @@ class Agent:
 class TabularAgent(Agent):
 
     def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=config.n_episodes-1) -> None:
+        self.stats = pd.DataFrame({
+            "episode_nr": np.arange(1, n_episodes + 2, 1),
+            "total_reward": np.empty(n_episodes + 1, dtype=int),
+            "avg_reward": np.empty(n_episodes + 1)
+        })
         super().__init__(environment, learning_strategy, n_episodes)
-        # TODO set n_episodes to 10000
+
 
     def train(self) -> None:
         super(TabularAgent, self).train()
@@ -93,7 +93,7 @@ class TabularAgent(Agent):
 
                 # break if episode is over
                 if percept.done:
-                    # self.results()
+                    self.results()
                     break
 
             # end episode
@@ -124,8 +124,88 @@ class TabularAgent(Agent):
             #         f'({self.stats.avg_reward[self.episode_count]}%) $$$'
             # )
             # print(self.learning_strategy.π)
-            ReturnVisual.plot(self.stats[:self.episode_count], self.episode_count)
+            ReturnVisual.plot(self.stats.episode_nr[:self.episode_count], self.stats.avg_reward[:self.episode_count], self.episode_count)
             QValuesVisual.plot(self.learning_strategy.q_values, self.episode_count)
             PolicyVisual.plot(self.learning_strategy.π, self.episode_count)
-            # plt.show()
 
+class DQNAgent(Agent):
+
+    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=config.n_episodes-1) -> None:
+        self.stats = pd.DataFrame({
+            "episode_nr": np.arange(1, n_episodes + 2, 1),
+            "timesteps": np.empty(n_episodes + 1, dtype=int),
+            "max_timestep_until_now": np.empty(n_episodes + 1, dtype=int)
+        })
+        super().__init__(environment, learning_strategy, n_episodes)
+
+    def train(self) -> None:
+        super(DQNAgent, self).train()
+
+        # as longs as the agents hasn't reached the maximum number of episodes
+        while not self.done:
+
+            # start a new episode
+            episode = Episode(self.env)
+            self.episodes.append(episode)
+            # initialize the start state
+            state = self.env.reset()
+            # reset the learning strategy
+            self.learning_strategy.start_episode()
+
+            # Added episode count for easier tracking of episodes
+            print(f'\n\nEpisode {self.episode_count + 1}')
+            #print(f'=============================')
+
+            # while the episode isn't finished by length
+            while not self.learning_strategy.done():
+
+                # learning strategy (policy) determines next action to take
+                action = self.learning_strategy.next_action(state)
+                # agent observes the results of his action: the next_state and the corresponding reward
+                observation = self.env.step(action)[:-1]
+                # render environment
+                #self.env.render()
+                # create Percept from s,a,r,s' and add to Episode
+                percept = Percept((state, action) + observation)
+                episode.add(percept)
+
+                # learn from one or more Percepts in the Episode
+                self.learning_strategy.learn(episode)
+
+                # update state
+                state = percept.next_state
+
+                # break if episode is over
+                if percept.done:
+                    self.results()
+                    break
+
+            # end episode
+            self.episode_count += 1
+
+        self.stats.to_pickle(
+            os.path.join(
+                config.params.get("dirs").get("output"),
+                config.params.get("experiment").get(config.current_experiment).get("environment"),
+                config.current_experiment,
+                "results.pkl"))
+        self.stats.to_csv(
+            os.path.join(
+                config.params.get("dirs").get("output"),
+                config.params.get("experiment").get(config.current_experiment).get("environment"),
+                config.current_experiment,
+                "results.csv"))
+        self.env.close()
+
+    def results(self):
+        if self.learning_strategy.max_timesteps < self.learning_strategy.t:
+            self.learning_strategy.max_timesteps = self.learning_strategy.t
+
+        self.stats.at[self.episode_count, 'total_reward'] = self.learning_strategy.t #total rewards is nr timesteps
+        print(f"Timesteps balanced: $$ {self.learning_strategy.t} $$ ")
+        print(f"Maximum: == {self.learning_strategy.max_timesteps} ==")
+        # self.stats.at[self.episode_count, 'avg_reward'] = \
+        #     np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
+
+        if self.episode_count == 0 or (self.episode_count + 1) % config.output_freq == 0:
+            ReturnVisual.plot(self.stats[:self.episode_count], self.episode_count)
