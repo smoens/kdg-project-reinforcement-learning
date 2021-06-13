@@ -7,33 +7,33 @@ This repository contains the code for solving two reinforcement learning problem
 The initial code structure was provided by Wouter De Ketelaere. In addition to the implementation of the functions, I've added a models and utils directory. See below for the complete structure.
 
 ## 🧐 What's inside?
+    .
+    ├── agent
+    ├──── agent.py
+    ├──── episode.py
+    ├──── percept.py            
+    ├── environment
+    ├──── environment.py
+    ├──── markovdecisionprocess.py
+    ├──── openai.py            
+    ├── learning
+    ├──── tabular
+    ├────── tabular_learning.py
+    ├────── qlearning.py        
+    ├──── learning_strategy.py        
+    ├── model
+    ├──── model1.py
+    ├── utils
+    ├──── config.py
+    ├──── visuals.py        
+    ├── main.py
+
 The code breaks down in 5 big blocks:
 * agent
 * environment
 * learning: learning strategies the agent can apply
 * model: contains models used for neural network learning strategies
 * utils: contains helper functions and configuration file for easy tracking of expirements
-
-    .
-    ├── **agent**
-    ├──── agent.py
-    ├──── episode.py
-    ├──── percept.py            
-    ├── **environment**
-    ├──── environment.py
-    ├──── markovdecisionprocess.py
-    ├──── openai.py            
-    ├── **learning**
-    ├──── tabular
-    ├────── tabular_learning.py
-    ├────── qlearning.py        
-    ├──── learning_strategy.py        
-    ├── **model**
-    ├──── model1.py
-    ├── **utils**
-    ├──── config.py
-    ├──── visuals.py        
-    ├── main.py
 
 ## 🧊 Frozen Lake
 Reference: [FrozenLake-v0](https://gym.openai.com/envs/FrozenLake-v0/)
