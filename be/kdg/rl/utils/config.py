@@ -1,9 +1,9 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment20"
-n_episodes = 10000
-output_freq = 100      # define at what frequency of episodes we want to create output
+current_experiment = "experiment30"
+n_episodes = 100
+output_freq = 10      # define at what frequency of episodes we want to create output
 
 def init():
     init_folders(current_experiment)
@@ -21,7 +21,7 @@ params = {
             'description': 'Experiment QLearning with default settings',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -32,7 +32,7 @@ params = {
             'description': 'Experiment QLearning with completely random agent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -42,7 +42,7 @@ params = {
             'description': 'Experiment QLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -52,7 +52,7 @@ params = {
             'description': 'Experiment QLearning with lower discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.5,
@@ -62,7 +62,7 @@ params = {
             'description': 'Experiment QLearning with decreased learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.5,
             'λ': 0.0005,
             'γ': 0.5,
@@ -72,7 +72,7 @@ params = {
             'description': 'Experiment QLearning with very small learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.2,
             'λ': 0.0005,
             'γ': 0.5,
@@ -82,7 +82,7 @@ params = {
             'description': 'Experiment QLearning with large learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.9,
             'λ': 0.0005,
             'γ': 0.5,
@@ -92,19 +92,28 @@ params = {
             'description': 'Experiment QLearning with very small discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
-            'nstep': None,
+            'n': None,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.1,
             't_max': 99
         },
-
+        "experiment08": {
+            'description': 'Experiment QLearning',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'Qlearning',
+            'n': None,
+            'α': 0.7,
+            'λ': 0.001,
+            'γ': 0.9,
+            't_max': 99
+        },
         # ## NStepQLearning experiments ## #
         "experiment10": {
             'description': 'Experiment NStepQLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '3',
+            'n': '3',
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -114,7 +123,7 @@ params = {
             'description': 'Experiment NStepQLearning with lower discount',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '3',
+            'n': '3',
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.5,
@@ -124,7 +133,7 @@ params = {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '7',
+            'n': '7',
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.5,
@@ -134,7 +143,7 @@ params = {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '2',
+            'n': '2',
             'α': 0.6,
             'λ': 0.0005,
             'γ': 0.9,
@@ -144,7 +153,7 @@ params = {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '2',
+            'n': '2',
             'α': 0.5,
             'λ': 0.0005,
             'γ': 0.6,
@@ -154,7 +163,7 @@ params = {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '2',
+            'n': '2',
             'α': 0.5,
             'λ': 0.0005,
             'γ': 0.4,
@@ -164,7 +173,7 @@ params = {
             'description': 'Experiment NStepQLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
-            'nstep': '1',
+            'n': '1',
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -175,7 +184,18 @@ params = {
             'description': 'Experiment MonteCarloLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'MonteCarloLearning',
-            'nstep': None,
+            'n': None,     #nstep
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.9,
+            't_max': 99
+        },
+        # ## DeepQLearning experiments ## #
+        "experiment30": {
+            'description': 'Experiment DeepQLearning',
+            'environment': 'CartPoleEnvironment',
+            'learning': 'DeepQLearning',
+            'n': '5',       #batch_size
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
