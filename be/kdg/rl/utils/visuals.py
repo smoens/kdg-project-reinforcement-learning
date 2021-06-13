@@ -29,6 +29,7 @@ class PolicyVisual:
         plt.quiver(x_values, y_values)
         plt.savefig(os.path.join(
             config.params.get("dirs").get("output"),
+            config.params.get("experiment").get(config.current_experiment).get("environment"),
             config.current_experiment,
             config.params.get("dirs").get("qval"),
             f"episode_{count+1}.png"))
@@ -41,6 +42,7 @@ class ReturnVisual:
         plt.plot(rewards.episode_nr, rewards.avg_reward)
         plt.savefig(os.path.join(
             config.params.get("dirs").get("output"),
+            config.params.get("experiment").get(config.current_experiment).get("environment"),
             config.current_experiment,
             config.params.get("dirs").get("reward"),
             f"episode_{count+1}.png"))

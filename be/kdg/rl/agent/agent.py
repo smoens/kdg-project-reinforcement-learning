@@ -102,11 +102,13 @@ class TabularAgent(Agent):
         self.stats.to_pickle(
             os.path.join(
                 config.params.get("dirs").get("output"),
+                config.params.get("experiment").get(config.current_experiment).get("environment"),
                 config.current_experiment,
                 "results.pkl"))
         self.stats.to_csv(
             os.path.join(
                 config.params.get("dirs").get("output"),
+                config.params.get("experiment").get(config.current_experiment).get("environment"),
                 config.current_experiment,
                 "results.csv"))
         self.env.close()
@@ -116,7 +118,7 @@ class TabularAgent(Agent):
         self.stats.at[self.episode_count, 'avg_reward'] = \
             np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
 
-        if self.episode_count % (config.output_freq-1) == 0:
+        if self.episode_count == 0 or (self.episode_count + 1) % config.output_freq == 0:
             # print(f'Total rewards after {self.episode_count + 1} episodes: '
             #         f'$$$ {self.stats.total_reward[self.episode_count]} '
             #         f'({self.stats.avg_reward[self.episode_count]}%) $$$'
