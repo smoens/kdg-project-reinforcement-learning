@@ -65,6 +65,7 @@ class NStepQlearning(TabularLearner):
                 done = p.done
                 self.q_values[s, a] = self.q_values[s, a] + self.α * \
                                       (self.q_values[s, a] - (r + self.γ * (np.max(self.q_values[s2, :]))))
+                self.total_rewards += r
             super().learn(episode)
 
     def evaluate(self):

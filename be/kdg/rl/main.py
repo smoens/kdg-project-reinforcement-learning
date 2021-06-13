@@ -16,5 +16,5 @@ if __name__ == '__main__':
     nstep = config.params.get("experiment").get(experiment).get("nstep")
 
     environment = eval(env_name)
-    agent: Agent = eval("TabularAgent(environment," + learning + "(environment" + ("))" if nstep is None else nstep + "))"))
+    agent: Agent = eval("TabularAgent(environment," + learning + "(environment" + ("))" if nstep is None else "," + nstep + "))"))
     agent.train()

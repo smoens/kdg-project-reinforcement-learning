@@ -7,7 +7,7 @@ from be.kdg.rl.utils import config
 class QValuesVisual:
     def plot(q_values, count):
         plt.subplot(1, 2, 1)
-        plt.suptitle(f'Episode {count}')
+        plt.suptitle(f'Episode {count+1}')
         plt.title('q-values')
         sns.heatmap(q_values, cmap="Blues", annot=True, cbar=False, square=False, vmin=0, vmax=1)
 
@@ -31,7 +31,7 @@ class PolicyVisual:
             config.params.get("dirs").get("output"),
             config.current_experiment,
             config.params.get("dirs").get("qval"),
-            f"episode_{count}.png"))
+            f"episode_{count+1}.png"))
         plt.clf()
 
 class ReturnVisual:
@@ -43,5 +43,5 @@ class ReturnVisual:
             config.params.get("dirs").get("output"),
             config.current_experiment,
             config.params.get("dirs").get("reward"),
-            f"episode_{count}.png"))
+            f"episode_{count+1}.png"))
         plt.clf()

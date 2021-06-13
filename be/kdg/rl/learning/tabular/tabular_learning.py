@@ -32,7 +32,7 @@ class TabularLearner(LearningStrategy):
         # state-action table
         self.q_values = np.zeros((self.env.state_size, self.env.n_actions))
 
-        # total rewards SMO
+        # total rewards
         self.total_rewards = 0
 
     def next_action(self, s: int):

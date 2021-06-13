@@ -1,7 +1,7 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment2"
+current_experiment = "experiment3"
 n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
@@ -18,7 +18,7 @@ params = {
     },
     "experiment": {
         "default": {
-            'description': 'Experiment with default settings',
+            'description': 'Experiment QLearning with default settings',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'nstep': None,
@@ -28,7 +28,7 @@ params = {
             't_max': 99
         },
         "experiment1": {
-            'description': 'Experiment with completely random agent',
+            'description': 'Experiment QLearning with completely random agent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'nstep': None,
@@ -38,7 +38,7 @@ params = {
             't_max': 99
         },
         "experiment2": {
-            'description': 'Experiment with lower discount rate',
+            'description': 'Experiment QLearning with lower discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'nstep': None,
@@ -48,10 +48,20 @@ params = {
             't_max': 99
         },
         "experiment3": {
-            'description': 'Experiment with lower discount rate',
+            'description': 'Experiment NStepQLearning',
             'environment': 'FrozenLakeEnvironment',
-            'learning': 'Qlearning',
-            'nstep': None,
+            'learning': 'NStepQlearning',
+            'nstep': '5',
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.5,
+            't_max': 99
+        },
+        "experiment4": {
+            'description': 'Experiment NStepQLearning with larger step-size',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'NStepQlearning',
+            'nstep': 10,
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.5,

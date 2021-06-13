@@ -108,7 +108,7 @@ class TabularAgent(Agent):
             os.path.join(
                 config.params.get("dirs").get("output"),
                 config.current_experiment,
-                "results.pkl"))
+                "results.csv"))
         self.env.close()
 
     def results(self):
