@@ -1,4 +1,4 @@
-from be.kdg.rl.agent.agent import TabularAgent, Agent
+from be.kdg.rl.agent.agent import DQNAgent, TabularAgent, Agent
 from be.kdg.rl.environment.openai import FrozenLakeEnvironment, FrozenLakeNotSlipperyEnvironment, CartPoleEnvironment
 from be.kdg.rl.learning.tabular.qlearning import Qlearning, NStepQlearning, MonteCarloLearning
 from be.kdg.rl.learning.approximate.deep_qlearning import DeepQLearning
@@ -13,9 +13,10 @@ if __name__ == '__main__':
 
     learning = config.params.get("experiment").get(experiment).get("learning")
     env_name = config.params.get("experiment").get(experiment).get("environment") + "()"
+    agent = config.params.get("experiment").get(experiment).get("agent")
     n = config.params.get("experiment").get(experiment).get("n")
 
     environment = eval(env_name)
-    agent: Agent = eval("TabularAgent(environment," + learning + "(environment" +
+    agent: Agent = eval(agent + "(environment," + learning + "(environment" +
                         ("))" if n is None else "," + n + "))"))
     agent.train()
