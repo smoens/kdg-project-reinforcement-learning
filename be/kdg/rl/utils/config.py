@@ -1,7 +1,7 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment7"
+current_experiment = "experiment9"
 n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
@@ -107,7 +107,7 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        "experiment6": {
+        "experiment9": {
             'description': 'Experiment NStepQLearning with lower discount',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
@@ -117,7 +117,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment7": {
+        "experiment10": {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
