@@ -1,7 +1,7 @@
 import os
 
 ############# PARAMETERS #############
-current_experiment = "experiment9"
+current_experiment = "experiment16"
 n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
@@ -27,7 +27,8 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        "experiment1": {
+        # ## Qlearning experiments ## #
+        "experiment01": {
             'description': 'Experiment QLearning with completely random agent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -37,7 +38,7 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        "experiment2": {
+        "experiment02": {
             'description': 'Experiment QLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -47,7 +48,7 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        "experiment3": {
+        "experiment03": {
             'description': 'Experiment QLearning with lower discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -57,7 +58,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment4": {
+        "experiment04": {
             'description': 'Experiment QLearning with decreased learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -67,7 +68,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment5": {
+        "experiment05": {
             'description': 'Experiment QLearning with very small learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -77,7 +78,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment6": {
+        "experiment06": {
             'description': 'Experiment QLearning with large learning rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -87,7 +88,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment7": {
+        "experiment07": {
             'description': 'Experiment QLearning with very small discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -97,7 +98,9 @@ params = {
             'γ': 0.1,
             't_max': 99
         },
-        "experiment8": {
+
+        # ## NStepQLearning experiments ## #
+        "experiment10": {
             'description': 'Experiment NStepQLearning',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
@@ -107,7 +110,7 @@ params = {
             'γ': 0.9,
             't_max': 99
         },
-        "experiment9": {
+        "experiment11": {
             'description': 'Experiment NStepQLearning with lower discount',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
@@ -117,7 +120,7 @@ params = {
             'γ': 0.5,
             't_max': 99
         },
-        "experiment10": {
+        "experiment12": {
             'description': 'Experiment NStepQLearning with larger step-size',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
@@ -126,7 +129,47 @@ params = {
             'λ': 0.0005,
             'γ': 0.5,
             't_max': 99
-        }
+        },
+        "experiment13": {
+            'description': 'Experiment NStepQLearning with larger step-size',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'NStepQlearning',
+            'nstep': '2',
+            'α': 0.6,
+            'λ': 0.0005,
+            'γ': 0.9,
+            't_max': 99
+        },
+        "experiment14": {
+            'description': 'Experiment NStepQLearning with larger step-size',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'NStepQlearning',
+            'nstep': '2',
+            'α': 0.5,
+            'λ': 0.0005,
+            'γ': 0.6,
+            't_max': 99
+        },
+        "experiment15": {
+            'description': 'Experiment NStepQLearning with larger step-size',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'NStepQlearning',
+            'nstep': '2',
+            'α': 0.5,
+            'λ': 0.0005,
+            'γ': 0.4,
+            't_max': 99
+        },
+        "experiment16": {
+            'description': 'Experiment NStepQLearning',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'NStepQlearning',
+            'nstep': '1',
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.9,
+            't_max': 99
+        },
     },
     "models": {
         "model1": {
