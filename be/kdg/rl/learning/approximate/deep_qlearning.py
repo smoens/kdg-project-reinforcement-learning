@@ -1,6 +1,7 @@
 from tensorflow.keras import Model
     # https://keras.io/api/models/model/
 import numpy as np
+import random
 from collections import deque
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
@@ -24,15 +25,22 @@ class DeepQLearning(LearningStrategy):
         self.c = config.update_interval
         self.q1 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
         self.q2 = model1.create_model("model1", self.env.state_size, self.env.n_actions)
+        self.max_timesteps = 0  #save longest balancing
 
     def next_action(self, state):
         """ Neural net decides on the next action to take """
         # TODO add function from Algorithm 10
-        return self.env.action_space.sample()  # just a random next action
+        exploitation_tradeoff = random.uniform(0, 1)
+        if exploitation_tradeoff > self.ε:
+            action = np.argmax(self.q1.predict(state))
+        else:
+            action = self.env.action_space.sample()  # just a random next action
+        # print(f'ε: {self.ε}; Exploitation tradeoff: {exploitation_tradeoff}; N'
+        #       f'ext: {action}; Prop: {round(self.π[action, s],3)}')
+        # print(f'Policy for state {s} = {self.π[:, s]}')
+        return action
 
     def learn(self, episode: Episode):
-        # TODO = CHECK
-        print("============= START TO LEARN =================")
         """ Sample batch from Episode and train NN on sample"""
         if episode.size >= self.batch_size:
             percepts = episode.sample(self.batch_size)
@@ -42,10 +50,7 @@ class DeepQLearning(LearningStrategy):
     def start_episode(self):
         self.t = 0
 
-
     def learn_from_batch(self, percepts):
-        # TODO = CHECK
-        print("============= learn_from_batch =================")
         count = 0
         training_data = self.build_training_set(percepts)  # transform percepts so they can be used by a neural network
         self.train_network(training_data)
@@ -54,12 +59,7 @@ class DeepQLearning(LearningStrategy):
         if count % self.c:
             self.q2.set_weights(self.q1.get_weights())
 
-
     def build_training_set(self, percepts):
-        # TODO = CHECK
-        #   Q2 wordt gebruikt om een training set te bouwen voor Q1
-        #   Q1 wordt getraind
-        print("============= build_training_set =================")
         training_data = deque()
         for p in percepts:  # random sample of percepts
             #print(f'p: {p}')
@@ -70,21 +70,17 @@ class DeepQLearning(LearningStrategy):
             done = p.done
 
             q_values = self.q1.predict(np.reshape(s, [1, self.env.state_size]))  # komt overeen met aantal acties in state s
-            optimal_q = np.max(self.q2.predict(np.reshape(s2, [1, self.env.state_size])))
+            optimal_q = np.max(self.q2.predict(np.reshape(s2, [1, self.env.state_size]))) #Q2 wordt gebruikt om een training set te bouwen voor Q1
 
             if done:
                 training_vector = r
             else:
                 training_vector = r + self.γ * optimal_q
-            training_data.append((s, training_vector)) # koppeling van huidige state aan toekomstige informatie (predictie 2de netwerk)
+            training_data.append((s, training_vector))  # koppeling van huidige state aan toekomstige informatie (predictie 2de netwerk)
         return training_data
 
     def train_network(self, training_data):  # train the network q1
-        # TODO = CHECK
-        #states = np.zeros((self.batch_size, self.env.state_size))
-        #states = np.reshape([training_data[i][0] for i in range(self.batch_size)], (1, self.batch_size, self.env.state_size))[0]
-        #q_values = np.reshape([training_data[i][1] for i in range(self.batch_size)], (1, self.batch_size, self.env.n_actions))[0] #should be probability for the 2 actions?
         for s, q in training_data:
             s_reshape = np.reshape(s, (1,self.env.state_size))
             q_reshape = np.asarray([[q]])
-            self.q1.fit(s_reshape, q_reshape, batch_size=self.batch_size)
+            self.q1.fit(s_reshape, q_reshape, batch_size=self.batch_size, verbose=0)   # training of Q1
