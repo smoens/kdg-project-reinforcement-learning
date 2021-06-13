@@ -36,9 +36,9 @@ class PolicyVisual:
         plt.clf()
 
 class ReturnVisual:
-    def plot(x, y, count):
+    def plot(x, y, count, title='Average Reward in % (by 100 episodes)'):
         plt.subplot(1, 1, 1)
-        plt.title('Average Reward in % (by 100 episodes)')
+        plt.title(title)
         plt.plot(x, y)
         plt.savefig(os.path.join(
             config.params.get("dirs").get("output"),

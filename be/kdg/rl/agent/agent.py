@@ -208,4 +208,8 @@ class DQNAgent(Agent):
         #     np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
 
         if self.episode_count == 0 or (self.episode_count + 1) % config.output_freq == 0:
-            ReturnVisual.plot(self.stats[:self.episode_count], self.episode_count)
+            ReturnVisual.plot(self.stats.episode_nr[:self.episode_count],
+                              self.stats.timesteps[:self.episode_count],
+                              self.episode_count,
+                              f"Timesteps by episode (by {config.output_freq} episodes)"
+        )
