@@ -69,18 +69,22 @@ class DeepQLearning(LearningStrategy):
             s2 = p.next_state
             done = p.done
 
-            optimal_q = self.q1.predict(np.reshape(s2, [1, self.env.state_size]))
+            q_values = self.q1.predict(np.reshape(s, [1, self.env.state_size]))  # komt overeen met aantal acties in state s
+            optimal_q = np.max(self.q2.predict(np.reshape(s2, [1, self.env.state_size])))
+
             if done:
-                q = r
+                training_vector = r
             else:
-                q = r + self.γ * np.max(optimal_q)
-            training_data.append((s, q))
-        #print(training_data)
+                training_vector = r + self.γ * optimal_q
+            training_data.append((s, training_vector)) # koppeling van huidige state aan toekomstige informatie (predictie 2de netwerk)
         return training_data
 
     def train_network(self, training_data):  # train the network q1
         # TODO = CHECK
         #states = np.zeros((self.batch_size, self.env.state_size))
-        states = np.reshape([training_data[i][0] for i in range(self.batch_size)], (1, self.batch_size, self.env.state_size))[0]
-        rewards = np.reshape([training_data[i][1] for i in range(self.batch_size)], (1, self.batch_size, 1))[0]
-        self.q1.fit(states, rewards, batch_size=self.batch_size)
+        #states = np.reshape([training_data[i][0] for i in range(self.batch_size)], (1, self.batch_size, self.env.state_size))[0]
+        #q_values = np.reshape([training_data[i][1] for i in range(self.batch_size)], (1, self.batch_size, self.env.n_actions))[0] #should be probability for the 2 actions?
+        for s, q in training_data:
+            s_reshape = np.reshape(s, (1,self.env.state_size))
+            q_reshape = np.asarray([[q]])
+            self.q1.fit(s_reshape, q_reshape, batch_size=self.batch_size)
