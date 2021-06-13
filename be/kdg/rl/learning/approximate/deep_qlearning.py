@@ -69,14 +69,18 @@ class DeepQLearning(LearningStrategy):
             s2 = p.next_state
             done = p.done
 
-            q_values = self.q1.predict(np.reshape(s, [1, self.env.state_size]))  # komt overeen met aantal acties in state s
-            optimal_q = np.max(self.q2.predict(np.reshape(s2, [1, self.env.state_size]))) #Q2 wordt gebruikt om een training set te bouwen voor Q1
+            q_values = self.q1.predict(np.reshape(s, [1, self.env.state_size]))
+            if self.ddqn:
+                optimal_a = np.argmax(self.q1.predict(np.reshape(s2, [1, self.env.state_size])))
+                optimal_q = self.q2.predict(np.reshape(s2, [1, self.env.state_size]))[optimal_a]
+            else:
+                optimal_q = np.max(self.q2.predict(np.reshape(s2, [1, self.env.state_size]))) #Q2 wordt gebruikt om een training set te bouwen voor Q1
 
             if done:
-                training_vector = r
+                q_values[0][a] = r
             else:
-                training_vector = r + self.γ * optimal_q
-            training_data.append((s, training_vector))  # koppeling van huidige state aan toekomstige informatie (predictie 2de netwerk)
+                q_values[0][a] = r + self.γ * optimal_q
+            training_data.append((s, q_values[0][a]))  # koppeling van huidige state aan toekomstige informatie (predictie 2de netwerk)
         return training_data
 
     def train_network(self, training_data):  # train the network q1
