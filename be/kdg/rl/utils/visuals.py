@@ -1,7 +1,8 @@
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+import os
+from be.kdg.rl.utils import config
 
 class QValuesVisual:
     def plot(q_values, count):
@@ -26,13 +27,21 @@ class PolicyVisual:
         x_values = np.reshape([col[0] for col in xy_values], (4,4))
         y_values = np.reshape([col[1] for col in xy_values], (4,4))
         plt.quiver(x_values, y_values)
-        plt.savefig(f'./output/images/qvals/episode_{count}.png')
+        plt.savefig(os.path.join(
+            config.params.get("dirs").get("output"),
+            config.current_experiment,
+            config.params.get("dirs").get("qval"),
+            f"episode_{count}.png"))
         plt.clf()
 
 class ReturnVisual:
     def plot(rewards, count):
         plt.subplot(1, 1, 1)
-        plt.title('Average Reward in %')
+        plt.title('Average Reward in % (by 100 episodes)')
         plt.plot(rewards.episode_nr, rewards.avg_reward)
-        plt.savefig(f'./output/images/reward/episode_{count}.png')
+        plt.savefig(os.path.join(
+            config.params.get("dirs").get("output"),
+            config.current_experiment,
+            config.params.get("dirs").get("reward"),
+            f"episode_{count}.png"))
         plt.clf()

@@ -5,6 +5,7 @@ import matplotlib.animation as animation
 import time
 import numpy as np
 import pandas as pd
+import os
 
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.agent.percept import Percept
@@ -12,11 +13,11 @@ from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.learningstrategy import LearningStrategy
 from be.kdg.rl.learning.tabular.tabular_learning import TabularLearner
 from be.kdg.rl.utils.visuals import QValuesVisual, PolicyVisual, ReturnVisual
-
+from be.kdg.rl.utils import config
 
 class Agent:
 
-    def __init__(self, environment: Environment, learning_strategy: LearningStrategy, n_episodes=9999):
+    def __init__(self, environment: Environment, learning_strategy: LearningStrategy, n_episodes=config.n_episodes-1):
         super().__init__()
         self.env = environment
         self.learning_strategy = learning_strategy
@@ -49,7 +50,7 @@ class Agent:
 
 class TabularAgent(Agent):
 
-    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=9999) -> None:
+    def __init__(self, environment: Environment, learning_strategy: TabularLearner, n_episodes=config.n_episodes-1) -> None:
         super().__init__(environment, learning_strategy, n_episodes)
         # TODO set n_episodes to 10000
 
@@ -68,7 +69,7 @@ class TabularAgent(Agent):
             self.learning_strategy.start_episode()
 
             # Added episode count for easier tracking of episodes
-            print(f'\n\nEpisode {self.episode_count}')
+            print(f'\n\nEpisode {self.episode_count + 1}')
             #print(f'=============================')
 
             # while the episode isn't finished by length
@@ -98,8 +99,16 @@ class TabularAgent(Agent):
             # end episode
             self.episode_count += 1
 
-        self.stats.to_pickle("./output/results.pkl")
-        self.stats.to_csv("./output/results.csv")
+        self.stats.to_pickle(
+            os.path.join(
+                config.params.get("dirs").get("output"),
+                config.current_experiment,
+                "results.pkl"))
+        self.stats.to_csv(
+            os.path.join(
+                config.params.get("dirs").get("output"),
+                config.current_experiment,
+                "results.pkl"))
         self.env.close()
 
     def results(self):
@@ -107,8 +116,7 @@ class TabularAgent(Agent):
         self.stats.at[self.episode_count, 'avg_reward'] = \
             np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
 
-
-        if self.episode_count % 99 == 0:
+        if self.episode_count % (config.output_freq-1) == 0:
             # print(f'Total rewards after {self.episode_count + 1} episodes: '
             #         f'$$$ {self.stats.total_reward[self.episode_count]} '
             #         f'({self.stats.avg_reward[self.episode_count]}%) $$$'

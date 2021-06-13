@@ -1,5 +1,21 @@
+import os
+
 ############# PARAMETERS #############
+current_experiment = "experiment2"
+n_episodes = 10000
+output_freq = 100      # define at what frequency of episodes we want to create output
+
+def init():
+    init_folders(current_experiment)
+
+
 params = {
+    # directories for storing output graphs and results
+    "dirs": {
+        "output": os.path.join("./", "output"),
+        "qval": os.path.join("images", "qval"),
+        "reward": os.path.join("images", "reward")
+    },
     "experiment": {
         "default": {
             'description': 'Experiment with default settings',
@@ -22,6 +38,16 @@ params = {
             't_max': 99
         },
         "experiment2": {
+            'description': 'Experiment with lower discount rate',
+            'environment': 'FrozenLakeEnvironment',
+            'learning': 'Qlearning',
+            'nstep': None,
+            'α': 0.7,
+            'λ': 0.0005,
+            'γ': 0.5,
+            't_max': 99
+        },
+        "experiment3": {
             'description': 'Experiment with lower discount rate',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
@@ -54,3 +80,14 @@ params = {
         "DoubleDeepQLearning"
     ]
 }
+
+
+def init_folders(experiment):
+    path_experiment = os.path.join(params.get("dirs").get("output"), experiment)
+    path_qval = params.get("dirs").get("qval")
+    path_reward = params.get("dirs").get("reward")
+    if not os.path.exists(path_experiment):
+        os.makedirs(path_experiment)
+        os.makedirs(os.path.join(path_experiment, path_qval))
+        os.makedirs(os.path.join(path_experiment, path_reward))
+    return
