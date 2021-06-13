@@ -134,7 +134,7 @@ class DQNAgent(Agent):
         self.stats = pd.DataFrame({
             "episode_nr": np.arange(1, n_episodes + 2, 1),
             "timesteps": np.empty(n_episodes + 1, dtype=int),
-            "max_timestep_until_now": np.empty(n_episodes + 1, dtype=int)
+            "avg_timesteps": np.empty(n_episodes + 1, dtype=int)
         })
         super().__init__(environment, learning_strategy, n_episodes)
 
@@ -201,8 +201,9 @@ class DQNAgent(Agent):
         if self.learning_strategy.max_timesteps < self.learning_strategy.t:
             self.learning_strategy.max_timesteps = self.learning_strategy.t
 
-        self.stats.at[self.episode_count, 'total_reward'] = self.learning_strategy.t #total rewards is nr timesteps
-        print(f"Timesteps balanced: $$ {self.learning_strategy.t} $$ ")
+        self.stats.at[self.episode_count, 'timesteps'] = self.learning_strategy.t #total rewards is nr timesteps, the more timesteps in an episode the better
+        self.stats.at[self.episode_count, 'avg_timesteps'] = np.round(self.learning_strategy.t / (self.episode_count + 1) * 100, 1)   # total rewards is nr timesteps
+        print(f"Avg Timesteps balanced: $$ {self.learning_strategy.t} $$ ")
         print(f"Maximum: == {self.learning_strategy.max_timesteps} ==")
         # self.stats.at[self.episode_count, 'avg_reward'] = \
         #     np.round(self.learning_strategy.total_rewards / (self.episode_count + 1) * 100, 1)
@@ -211,5 +212,5 @@ class DQNAgent(Agent):
             ReturnVisual.plot(self.stats.episode_nr[:self.episode_count],
                               self.stats.timesteps[:self.episode_count],
                               self.episode_count,
-                              f"Timesteps by episode (by {config.output_freq} episodes)"
+                              f"Timesteps (by {config.output_freq} episodes)"
         )

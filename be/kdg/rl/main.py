@@ -15,8 +15,11 @@ if __name__ == '__main__':
     env_name = config.params.get("experiment").get(experiment).get("environment") + "()"
     agent = config.params.get("experiment").get(experiment).get("agent")
     n = config.params.get("experiment").get(experiment).get("n")
+    ddqn = config.params.get("experiment").get(experiment).get("ddqn")
 
     environment = eval(env_name)
     agent: Agent = eval(agent + "(environment," + learning + "(environment" +
-                        ("))" if n is None else "," + n + "))"))
+                        ("))" if n is None and ddqn is None else "," + n) +
+                        ("))" if ddqn is None else "," + ddqn + "))")
+                    )
     agent.train()
