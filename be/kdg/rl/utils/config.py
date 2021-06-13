@@ -6,7 +6,7 @@ n_episodes = 10000
 output_freq = 100      # define at what frequency of episodes we want to create output
 
 def init(environment):
-    init_folders(environment, experiment=current_experiment)
+    init_folders(current_experiment)
 
 
 params = {
@@ -152,7 +152,7 @@ params = {
 }
 
 
-def init_folders(env, experiment):
+def init_folders(experiment):
     path_experiment = os.path.join(
         params.get("dirs").get("output"),
         params.get("experiment").get(current_experiment).get("environment"),
