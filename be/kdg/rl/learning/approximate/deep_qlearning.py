@@ -5,7 +5,7 @@ from collections import deque
 from be.kdg.rl.agent.episode import Episode
 from be.kdg.rl.environment.environment import Environment
 from be.kdg.rl.learning.learningstrategy import LearningStrategy
-from be.kdg.rl.model import model1
+from be.kdg.rl.learning.model import model1
 from be.kdg.rl.utils import config
 
 class DeepQLearning(LearningStrategy):
