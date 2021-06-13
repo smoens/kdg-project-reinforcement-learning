@@ -2,9 +2,9 @@ import os
 
 ############# PARAMETERS #############
 current_experiment = "experiment30"
-n_episodes = 100
+n_episodes = 200
 output_freq = 10        # define at what frequency of episodes we want to create output
-update_interval = 10    # update interval for deep learning
+update_interval = 20    # update interval for deep learning
 
 def init():
     init_folders(current_experiment)
@@ -20,6 +20,7 @@ params = {
     "experiment": {
         "default": {
             'description': 'Experiment QLearning with default settings',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -31,6 +32,7 @@ params = {
         # ## Qlearning experiments ## #
         "experiment01": {
             'description': 'Experiment QLearning with completely random agent',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -41,6 +43,7 @@ params = {
         },
         "experiment02": {
             'description': 'Experiment QLearning',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -51,6 +54,7 @@ params = {
         },
         "experiment03": {
             'description': 'Experiment QLearning with lower discount rate',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -61,6 +65,7 @@ params = {
         },
         "experiment04": {
             'description': 'Experiment QLearning with decreased learning rate',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -71,6 +76,7 @@ params = {
         },
         "experiment05": {
             'description': 'Experiment QLearning with very small learning rate',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -81,6 +87,7 @@ params = {
         },
         "experiment06": {
             'description': 'Experiment QLearning with large learning rate',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -91,6 +98,7 @@ params = {
         },
         "experiment07": {
             'description': 'Experiment QLearning with very small discount rate',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -101,6 +109,7 @@ params = {
         },
         "experiment08": {
             'description': 'Experiment QLearning',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'Qlearning',
             'n': None,
@@ -112,6 +121,7 @@ params = {
         # ## NStepQLearning experiments ## #
         "experiment10": {
             'description': 'Experiment NStepQLearning',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '3',
@@ -122,6 +132,7 @@ params = {
         },
         "experiment11": {
             'description': 'Experiment NStepQLearning with lower discount',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '3',
@@ -132,6 +143,7 @@ params = {
         },
         "experiment12": {
             'description': 'Experiment NStepQLearning with larger step-size',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '7',
@@ -142,6 +154,7 @@ params = {
         },
         "experiment13": {
             'description': 'Experiment NStepQLearning with larger step-size',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '2',
@@ -152,6 +165,7 @@ params = {
         },
         "experiment14": {
             'description': 'Experiment NStepQLearning with larger step-size',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '2',
@@ -162,6 +176,7 @@ params = {
         },
         "experiment15": {
             'description': 'Experiment NStepQLearning with larger step-size',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '2',
@@ -172,6 +187,7 @@ params = {
         },
         "experiment16": {
             'description': 'Experiment NStepQLearning',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'NStepQlearning',
             'n': '1',
@@ -183,6 +199,7 @@ params = {
         # ## Monte Carlo experiments ## #
         "experiment20": {
             'description': 'Experiment MonteCarloLearning',
+            'agent': 'TabularAgent',
             'environment': 'FrozenLakeEnvironment',
             'learning': 'MonteCarloLearning',
             'n': None,     #nstep
@@ -194,9 +211,10 @@ params = {
         # ## DeepQLearning experiments ## #
         "experiment30": {
             'description': 'Experiment DeepQLearning',
+            'agent': 'DQNAgent',
             'environment': 'CartPoleEnvironment',
             'learning': 'DeepQLearning',
-            'n': '4',       #batch_size
+            'n': '20',       #batch_size
             'α': 0.7,
             'λ': 0.0005,
             'γ': 0.9,
@@ -207,10 +225,7 @@ params = {
         "model1": {
             "model_filename": "model1.h5",
             "lr": 0.001,
-            "num_epochs": 10,
-            "validation_steps": 10,
-            "metrics": ["acc"],
-            "seed": 1354874613,
+            "metrics": ["acc"]
         }
     },
     "environments": {
